@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Deepak Wadhwa | Stock Market Telegram Channel</title>
-    <!-- Meta Pixel Code (Facebook) -->
+    <title>Deepak Wadhwa | Stock Market Telegram Channel - Official</title>
+    
+    <!-- Meta Pixel Code (Facebook) - NEW PIXEL ID: 2070520553813490 -->
     <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -14,15 +15,14 @@
         t.src=v;s=b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '1295049119406707');
+        fbq('init', '2070520553813490');
         fbq('track', 'PageView');
     </script>
     <noscript>
-        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1295049119406707&ev=PageView&noscript=1"/>
+        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2070520553813490&ev=PageView&noscript=1"/>
     </noscript>
     <!-- End Meta Pixel Code -->
     
-    <!-- Optional: Custom Event Tracking for Telegram Clicks & Subscription -->
     <style>
         * {
             margin: 0;
@@ -260,7 +260,7 @@
 <div class="container">
     <div class="content">
         
-        <!-- New Logo -->
+        <!-- Logo -->
         <div class="logo-wrapper">
             <img class="logo" src="https://karanmetalabe.com/wp-content/uploads/2025/11/WhatsApp-Image-2025-10-14-at-12.14.49_fd910fb7.jpg" alt="Deepak Wadhwa Logo">
         </div>
@@ -270,7 +270,7 @@
         <div class="center-badge"><span class="badge">📊 STOCK MARKET STRATEGIST</span></div>
         
         <!-- BUTTON 1 - Top with tracking -->
-        <a class="telegram-btn track-telegram-btn" data-btn-position="top" href="https://t.me/+eMxamtGu0hg2NWY1" target="_blank" rel="noopener noreferrer">
+        <a class="telegram-btn track-telegram-btn" data-btn-position="top" href="#" id="telegramBtnTop">
             <span>📲</span> JOIN TELEGRAM CHANNEL <span>🚀</span>
         </a>
         
@@ -296,15 +296,12 @@
         
         <!-- SECOND BUTTON (Bottom) with tracking -->
         <div class="btn-group">
-            <a class="telegram-btn track-telegram-btn" data-btn-position="bottom" href="https://t.me/+eMxamtGu0hg2NWY1" target="_blank" rel="noopener noreferrer">
+            <a class="telegram-btn track-telegram-btn" data-btn-position="bottom" href="#" id="telegramBtnBottom">
                 <span>⚡</span> JOIN NOW & START PROFITING <span>⚡</span>
             </a>
         </div>
         
-        <!-- OPTIONAL: SUBSCRIPTION TRACKING BUTTON - Extra CTA for "Subscribe to Updates" 
-             This works as a "Notify Me" or subscribe event tracker without leaving page.
-             It tracks subscription intent (click) via both FB Pixel and custom GA-like event.
-        -->
+        <!-- SUBSCRIPTION TRACKING BUTTON - Extra CTA for Subscribe/Notify -->
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <button id="subscribeNotifyBtn" class="telegram-btn" style="background: linear-gradient(95deg, #256b5c, #2e8b7a); box-shadow: 0 10px 20px rgba(37,107,92,0.3);">
                 🔔 GET FREE ALERTS & SUBSCRIBE 🔔
@@ -326,67 +323,119 @@
 <div id="subscribeToast" class="subscribe-toast">✅ Subscribed! You'll receive updates. 🚀</div>
 
 <script>
-    // ----------------------------------------------
-    // ADVANCED EVENT TRACKING & SUBSCRIBE BUTTON TRACKING
-    // ----------------------------------------------
-    
-    // Helper: Track custom events to Facebook Pixel (Meta Pixel) 
-    // as well as console + dataLayer for possible Google Analytics integration.
-    // Using both fbq and custom event logging.
-    
-    // 1. Track Telegram Clicks (both top and bottom buttons)
-    // 2. Track Subscription Button click (Subscribe/Notify event)
-    // 3. Track additional "Join Channel" events for micro-conversions.
+    // ============================================================
+    // COMPLETE FACEBOOK PIXEL TRACKING - PIXEL ID: 2070520553813490
+    // ============================================================
+    // Tracks: All Telegram Join buttons + Subscribe/Notify button
+    // Events: Lead, Contact, SubscribeButtonClick, CompleteRegistration, etc.
+    // Telegram Link: https://t.me/+eMxamtGu0hg2NWY1
     
     (function() {
-        // Ensure fbq is available (already loaded globally from Meta Pixel)
-        // Also handle if fbq is not defined edge case
-        const safeFbq = function() {
-            if (typeof fbq === 'function') {
-                return fbq;
-            } else {
-                console.warn("fbq not loaded yet, but we'll push to custom queue");
-                return function() { console.log("[Mock FBQ]", arguments); };
-            }
-        };
+        // Telegram channel link (from original code)
+        const TELEGRAM_LINK = "https://t.me/+eMxamtGu0hg2NWY1";
+        const TELEGRAM_CODE = "eMxamtGu0hg2NWY1";
+        const PIXEL_ID = "2070520553813490";
         
-        // Utility to track custom event with pixel and optional dataLayer (for GTM/GA)
-        function trackEvent(eventName, params = {}) {
-            try {
-                // Send to Facebook Pixel (Meta)
-                const fbqFunc = safeFbq();
-                fbqFunc('trackCustom', eventName, params);
-                console.log(`[Event Tracked] ${eventName}`, params);
+        // Get all elements
+        const topTelegramBtn = document.getElementById('telegramBtnTop');
+        const bottomTelegramBtn = document.getElementById('telegramBtnBottom');
+        const subscribeBtn = document.getElementById('subscribeNotifyBtn');
+        
+        // Helper to check fbq readiness
+        const isFbqReady = () => typeof fbq === 'function';
+        
+        // Function to redirect to Telegram
+        function redirectToTelegram() {
+            window.location.href = TELEGRAM_LINK;
+        }
+        
+        // Function to fire complete tracking for Telegram Join buttons
+        function fireTelegramJoinTracking(buttonElement, position) {
+            let buttonPosition = position || 'unknown';
+            let buttonText = buttonElement.innerText || 'Join Telegram';
+            
+            if (isFbqReady()) {
+                // 1. Lead Event (Primary conversion)
+                fbq('track', 'Lead', {
+                    content_name: 'Deepak_Wadhwa_Telegram_Subscribe',
+                    content_category: 'Stock_Market_Subscription',
+                    button_location: buttonPosition,
+                    cta_text: buttonText,
+                    telegram_link: TELEGRAM_LINK,
+                    invite_code: TELEGRAM_CODE,
+                    currency: 'INR',
+                    value: 0.01,
+                    method: 'Telegram_Subscribe_Button',
+                    pixel_id: PIXEL_ID
+                });
                 
-                // Optional: Push to dataLayer if Google Tag Manager is present (enhanced tracking)
-                if (window.dataLayer) {
-                    window.dataLayer.push({
-                        'event': eventName,
-                        ...params
-                    });
-                }
-            } catch(e) {
-                console.error("Tracking error:", e);
+                // 2. Contact Event (Standard Meta event)
+                fbq('track', 'Contact', {
+                    content_name: 'Join Telegram Channel',
+                    content_category: 'Telegram_Stock_Channel',
+                    button_position: buttonPosition,
+                    channel_code: TELEGRAM_CODE
+                });
+                
+                // 3. Custom Event: TelegramJoinClick
+                fbq('trackCustom', 'TelegramJoinClick', {
+                    event_source: 'Deepak_Wadhwa_LandingPage',
+                    button_position: buttonPosition,
+                    button_text: buttonText,
+                    timestamp: new Date().toISOString(),
+                    channel: 'Telegram',
+                    pixel_id: PIXEL_ID,
+                    invite_link: TELEGRAM_CODE
+                });
+                
+                // 4. CompleteRegistration Event
+                fbq('track', 'CompleteRegistration', {
+                    registration_method: 'Telegram_Subscribe_Button',
+                    content_name: 'Deepak_Wadhwa_Stock_Channel',
+                    status: 'initiated_subscribe',
+                    button_used: buttonPosition,
+                    channel_link: TELEGRAM_LINK
+                });
+                
+                console.log(`✅ [Pixel ${PIXEL_ID}] Telegram Join tracked: Lead, Contact, TelegramJoinClick, CompleteRegistration (${buttonPosition})`);
+            } else {
+                console.warn('⚠️ Facebook Pixel not ready');
             }
         }
         
-        // Special function for tracking "Subscribe" action distinct from join
-        function trackSubscribeAction() {
-            // Custom event specifically for subscription button click
-            trackEvent('Subscribe_Newsletter', {
-                'subscription_type': 'free_updates',
-                'channel': 'deepak_wadhwa_stocks',
-                'timestamp': new Date().toISOString()
-            });
-            
-            // Also fire a standard Facebook Lead event optionally for subscription intent
-            if (typeof fbq === 'function') {
+        // Function to fire tracking for Subscribe/Notify button (non-Telegram subscription)
+        function fireSubscribeTracking() {
+            if (isFbqReady()) {
+                // 1. Lead Event for subscription intent
                 fbq('track', 'Lead', {
-                    content_name: 'Stock Market Subscription',
-                    content_category: 'Telegram_Channel_Updates',
-                    currency: 'INR'
+                    content_name: 'Deepak_Wadhwa_Newsletter_Subscribe',
+                    content_category: 'Free_Alerts_Subscription',
+                    button_location: 'Subscribe_Notify_Button',
+                    cta_text: 'GET FREE ALERTS & SUBSCRIBE',
+                    currency: 'INR',
+                    value: 0.01,
+                    method: 'Subscribe_Button',
+                    pixel_id: PIXEL_ID
                 });
-                console.log("[FBQ] Lead event fired for subscription button");
+                
+                // 2. Custom Event: SubscribeButtonClick
+                fbq('trackCustom', 'SubscribeButtonClick', {
+                    event_source: 'Deepak_Wadhwa_LandingPage',
+                    button_position: 'Subscribe_Notify_CTA',
+                    button_text: 'GET FREE ALERTS & SUBSCRIBE',
+                    timestamp: new Date().toISOString(),
+                    subscription_type: 'free_updates',
+                    pixel_id: PIXEL_ID
+                });
+                
+                // 3. CompleteRegistration Event
+                fbq('track', 'CompleteRegistration', {
+                    registration_method: 'Subscribe_Notify_Button',
+                    content_name: 'Deepak_Wadhwa_Stock_Updates',
+                    status: 'subscribed_to_alerts'
+                });
+                
+                console.log(`✅ [Pixel ${PIXEL_ID}] Subscribe button tracked: Lead, SubscribeButtonClick, CompleteRegistration`);
             }
             
             // Show toast feedback
@@ -399,52 +448,37 @@
             }
         }
         
-        // Function to handle Telegram join button click (Join Channel event)
-        function handleTelegramClick(buttonElement, position) {
-            // Track custom event for join attempts
-            trackEvent('Telegram_Join_Click', {
-                'button_position': position,
-                'destination': 'https://t.me/+eMxamtGu0hg2NWY1',
-                'action': 'join_channel'
+        // Attach tracking to Telegram Top Button
+        if (topTelegramBtn) {
+            topTelegramBtn.removeAttribute('onclick');
+            topTelegramBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                fireTelegramJoinTracking(topTelegramBtn, 'top');
+                setTimeout(() => {
+                    redirectToTelegram();
+                }, 200);
             });
-            
-            // Also track standard Meta Pixel 'Contact' or custom conversion
-            if (typeof fbq === 'function') {
-                fbq('track', 'Contact', {
-                    content_name: 'Join Telegram Channel',
-                    content_category: 'Telegram_Stock_Channel',
-                    custom_position: position
-                });
-                console.log(`[FBQ] Contact tracked for ${position} button`);
-            }
-            
-            // Optional: tiny delay to ensure tracking fires before redirect (no delay needed, synchronous enough)
-            // But we let the browser naturally follow href
         }
         
-        // Attach event listeners to all Telegram buttons with class "track-telegram-btn"
-        const telegramBtns = document.querySelectorAll('.track-telegram-btn');
-        telegramBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const position = this.getAttribute('data-btn-position') || 'unknown';
-                // Call tracking function
-                handleTelegramClick(this, position);
-                // No e.preventDefault() because we want the link to open (telegram)
-                // Tracking happens before navigation (synchronous)
+        // Attach tracking to Telegram Bottom Button
+        if (bottomTelegramBtn) {
+            bottomTelegramBtn.removeAttribute('onclick');
+            bottomTelegramBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                fireTelegramJoinTracking(bottomTelegramBtn, 'bottom');
+                setTimeout(() => {
+                    redirectToTelegram();
+                }, 200);
             });
-        });
+        }
         
-        // Subscribe Button tracking (custom button for subscription/alert registration)
-        const subscribeBtn = document.getElementById('subscribeNotifyBtn');
+        // Attach tracking to Subscribe Button
         if (subscribeBtn) {
-            subscribeBtn.addEventListener('click', function(e) {
-                e.preventDefault();  // Doesn't navigate, just triggers subscribe tracking & toast
-                trackSubscribeAction();
+            subscribeBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                fireSubscribeTracking();
                 
-                // Additionally you can show additional modal or collect email, but here just track event.
-                // You could extend it later but meets requirement for "subscribe button track"
-                
-                // Optional: Change button text temporarily for better feedback
+                // Change button text temporarily for feedback
                 const originalText = subscribeBtn.innerHTML;
                 subscribeBtn.innerHTML = "✅ SUBSCRIBED! THANK YOU ✅";
                 setTimeout(() => {
@@ -453,63 +487,116 @@
             });
         }
         
-        // Additional: Page view tracking already included via Meta Pixel init + PageView
-        // For deeper event tracking, we also track "ViewContent" on page load (optional)
-        window.addEventListener('load', function() {
-            if (typeof fbq === 'function') {
-                fbq('track', 'ViewContent', {
-                    content_name: 'Deepak Wadhwa Stock Market Landing',
-                    content_type: 'landing_page',
-                    currency: 'INR'
-                });
-            }
-            trackEvent('Page_Loaded_Deepak', {
-                page_type: 'telegram_channel_promo'
+        // ============================================
+        // ADDITIONAL ENGAGEMENT TRACKING
+        // ============================================
+        if (isFbqReady()) {
+            // Track scroll depth
+            let scrollTracked25 = false, scrollTracked50 = false, scrollTracked75 = false;
+            window.addEventListener('scroll', function() {
+                const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+                if (scrollPercent >= 0.25 && !scrollTracked25) {
+                    scrollTracked25 = true;
+                    fbq('trackCustom', 'ScrollDepth', { depth_percent: 25, page: 'deepak_wadhwa_subscribe', pixel_id: PIXEL_ID });
+                }
+                if (scrollPercent >= 0.5 && !scrollTracked50) {
+                    scrollTracked50 = true;
+                    fbq('trackCustom', 'ScrollDepth', { depth_percent: 50, page: 'deepak_wadhwa_subscribe', pixel_id: PIXEL_ID });
+                }
+                if (scrollPercent >= 0.75 && !scrollTracked75) {
+                    scrollTracked75 = true;
+                    fbq('trackCustom', 'ScrollDepth', { depth_percent: 75, page: 'deepak_wadhwa_subscribe', pixel_id: PIXEL_ID });
+                }
             });
-            console.log("Deepak Wadhwa - Event tracking fully active");
-        });
+            
+            // Track time spent on page
+            let sessionStart = Date.now();
+            window.addEventListener('beforeunload', function() {
+                const timeSpentSec = Math.floor((Date.now() - sessionStart) / 1000);
+                if (timeSpentSec > 3) {
+                    fbq('trackCustom', 'TimeOnPage', {
+                        duration_seconds: timeSpentSec,
+                        page_type: 'Subscribe_Landing_Page',
+                        has_subscribe_buttons: true,
+                        pixel_id: PIXEL_ID
+                    });
+                }
+            });
+            
+            // Track button impressions
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let btnId = entry.target.id || entry.target.className;
+                        fbq('trackCustom', 'ButtonImpression', {
+                            button_id: btnId,
+                            visible: true,
+                            pixel_id: PIXEL_ID
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            if (topTelegramBtn) observer.observe(topTelegramBtn);
+            if (bottomTelegramBtn) observer.observe(bottomTelegramBtn);
+            if (subscribeBtn) observer.observe(subscribeBtn);
+            
+            // Track page fully loaded
+            window.addEventListener('load', function() {
+                fbq('trackCustom', 'LandingPageLoaded', {
+                    theme: 'teal_stock_market',
+                    load_time_ms: performance.now ? Math.round(performance.now()) : 0,
+                    pixel_id: PIXEL_ID,
+                    page_type: 'telegram_subscribe_landing'
+                });
+            });
+            
+            // Enhanced PageView with additional data
+            fbq('track', 'PageView', {
+                page_type: 'Telegram_Subscription_Landing',
+                creator: 'Deepak_Wadhwa',
+                niche: 'Stock_Market_Options_Trading_Nifty_BankNifty',
+                pixel_version: '2070520553813490',
+                invite_code: TELEGRAM_CODE
+            });
+        }
         
-        // EXTRA: For better subscription tracking we also add a dummy "Subscribe to Newsletter"
-        // The button we added already does that.
-        // If there is any future lead generation, we track as per requirement.
+        // Console confirmation
+        console.log('%c🔥 Deepak Wadhwa | Facebook Pixel Active: 2070520553813490 🔥', 'color: #136b7b; font-weight: bold; font-size: 14px; background: #d9f0f5; padding: 4px 10px; border-radius: 20px;');
+        console.log('✅ Pixel ID: 2070520553813490');
+        console.log(`✅ Telegram Link: ${TELEGRAM_LINK}`);
+        console.log('✅ 2 Telegram Join buttons tracked with: Lead, Contact, TelegramJoinClick, CompleteRegistration');
+        console.log('✅ Subscribe button tracked with: Lead, SubscribeButtonClick, CompleteRegistration');
+        console.log('✅ Additional tracking: ScrollDepth, TimeOnPage, ButtonImpression, LandingPageLoaded');
         
-        // Additional: Also track any outgoing Telegram links manually (extra safety)
-        // All telegram btns covered.
-        
-        // For clients who want specific conversion names – add a generic "Subscribe_Intent"
-        // Already done via trackSubscribeAction and Lead event.
-        
-        // Note: If you need to track 'Subscribe' as a custom conversion in Facebook ads manager, we fire both custom event and Lead standard event.
-        // Perfect for optimization.
-        
-        // Also inject console info to confirm pixel id loaded.
-        console.log("Meta Pixel ID 1295049119406707 initialized. Event tracking ready.");
+        // Expose debug helper
+        window.deepakTracker = {
+            testTelegramEvent: function() {
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Lead', { test_mode: true, source: 'console_debug', channel: TELEGRAM_CODE });
+                    console.log('✅ Test Telegram Join event triggered for Pixel 2070520553813490');
+                } else { console.error('❌ fbq not loaded'); }
+            },
+            testSubscribeEvent: function() {
+                if (typeof fbq === 'function') {
+                    fbq('trackCustom', 'SubscribeButtonClick', { test_mode: true, source: 'console_debug' });
+                    console.log('✅ Test Subscribe event triggered');
+                } else { console.error('❌ fbq not loaded'); }
+            },
+            getPixelStatus: () => typeof fbq === 'function' ? 'Active - Ready' : 'Inactive',
+            getPixelId: () => PIXEL_ID,
+            getChannelLink: () => TELEGRAM_LINK
+        };
     })();
-    
-    // Bonus: Separate handler for non-intrusive toast, plus ensuring FBQ ready.
-    // The toast element is already declared and used inside the subscription function
-    // We also display success message on subscription button press.
-    // This completes the requirement: "event code or subscribe button track".
-    
-    // Additional Option: If the user clicks on any Telegram button, we also mark them as "Initiated Checkout"/Custom conversion
-    // But we already track Contact & custom event "Telegram_Join_Click".
-    // Fully compatible with the existing Meta Pixel.
-    
-    // Also for better UX, we can show a "Copy Link" or something, but not needed.
-    // Fully validated HTML/CSS and event tracking.
-    
-    // Edge case: If the same user clicks multiple times on subscribe button, we handle gracefully.
-    // It will not cause duplicate critical errors.
-    
-    // Final code as per bhai's request: "event code or subscribe button track" -> Integrated fully.
-    // The subscribe button also includes visual feedback and triggers both Meta Pixel Lead event and Custom Subscription event.
-    // The two telegram buttons also trigger Contact event + custom Telegram_Join_Click.
-    // Additionally we added PageView and ViewContent.
-    // Tracking is fully non-intrusive and ensures conversion tracking for ad campaigns.
 </script>
 
-<!-- Optional: fallback to notify if Facebook Pixel hasn't loaded, but not required. 
-     All tracking functions wrap safely. -->
+<!-- Noscript fallback for additional event safety -->
+<noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2070520553813490&ev=Lead&noscript=1"/>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2070520553813490&ev=Contact&noscript=1"/>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2070520553813490&ev=CompleteRegistration&noscript=1"/>
+</noscript>
 
 </body>
 </html>
